@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: |
-  Provisiona a função AWS Lambda para recomendação de música, incluindo o Container
-  e a Integração completa com o API Gateway V2 (HTTP API) existente.
+  Provisiona a função AWS Lambda para Base de Conhecimento.
+  Apenas Rota e Integração (O Stage é gerenciado pela Infra).
 
 Parameters:
   EcrRepositoryName:
@@ -10,20 +10,18 @@ Parameters:
   ImageTag:
     Type: String
     Default: latest
-    Description: 'Tag da imagem Docker (ex: v0.1 ou latest)'
+    Description: 'Tag da imagem Docker'
   LambdaName:
     Type: String
     Default: lbd-spotispec-base-conhecimento
-    Description: 'Nome da função Lambda a ser criada.'
+    Description: 'Nome da função Lambda'
   ApiGatewayId: 
     Type: String
     Description: 'ID da API Gateway V2 (HTTP API)'
-    NoEcho: false
 
 Resources:
 
-  ## 1. IAM Role para a Função Lambda
-  # Permissões: Logs, ECR, e acesso a outros serviços 
+  ## 1. IAM Role 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
@@ -49,7 +47,7 @@ Resources:
                   - ecr:BatchGetImage
                 Resource: "*"
 
-  ## 2. Função AWS Lambda (O Container FastAPI)
+  ## 2. Função Lambda 
   FastApiLambdaFunction:
     Type: AWS::Lambda::Function
     Properties:
@@ -61,57 +59,31 @@ Resources:
       MemorySize: 512
       Timeout: 30
 
-
-  ## 3. Recursos de Integração com o API Gateway EXISTENTE
-
+  ## 3. Integração e Rotas
   
-  ## 3.1. Integração do API Gateway com a Função Lambda
   LambdaIntegration:
     Type: AWS::ApiGatewayV2::Integration
     Properties:
-      ApiId: !Ref ApiGatewayId # Usa o ID recebido como parâmetro
+      ApiId: !Ref ApiGatewayId
       IntegrationType: AWS_PROXY
       IntegrationUri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${FastApiLambdaFunction.Arn}/invocations"
       PayloadFormatVersion: "2.0"
       
-  ## 3.2. Rota POST /base-conhecimento
   KnowledgeBaseRoute:
     Type: AWS::ApiGatewayV2::Route
     Properties:
-      ApiId: !Ref ApiGatewayId # Usa o ID do Gateway
+      ApiId: !Ref ApiGatewayId
       RouteKey: "POST /base-conhecimento" 
-      Target: !Sub "integrations/${LambdaIntegration}" # Referencia a Integração definida acima
+      Target: !Sub "integrations/${LambdaIntegration}"
       
-  ## 3.3. Permissão de Invocação (API Gateway -> Lambda)
-  # CRÍTICO: Permite que o API Gateway invocar esta função Lambda
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
       FunctionName: !Ref FastApiLambdaFunction
       Principal: apigateway.amazonaws.com
-      # O SourceArn aponta para o ID da API Gateway, garantindo que só ele possa invocar
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayId}/*/*"
-      
-  ## 3.4. Deployment do Stage (Necessário para aplicar a Rota)
-  # Sempre que uma Rota ou Integração é modificada, o Stage deve ser re-deployado.
-  ApiDeployment:
-    Type: AWS::ApiGatewayV2::Deployment
-    Properties:
-      ApiId: !Ref ApiGatewayId
-      Description: !Sub "Deploy for commit ${AWS::StackId}"
-    DependsOn: 
-      - KnowledgeBaseRoute
-      - LambdaIntegration
-  ApiStage:
-    Type: AWS::ApiGatewayV2::Stage
-    Properties:
-      ApiId: !Ref ApiGatewayId
-      StageName: prod
-      DeploymentId: !Ref ApiDeployment
-      AutoDeploy: true
 
-  ## 3.5. Rota OPTIONS /base-conhecimento (Para CORS Preflight)
   OptionsKnowledgeBaseRoute:
     Type: AWS::ApiGatewayV2::Route
     Properties:
