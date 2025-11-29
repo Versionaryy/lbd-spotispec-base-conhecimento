@@ -6,7 +6,7 @@ Description: |
 Parameters:
   EcrRepositoryName:
     Type: String
-    Description: 'Nome do repositório ECR
+    Description: 'Nome do repositório ECR'
   ImageTag:
     Type: String
     Default: latest
