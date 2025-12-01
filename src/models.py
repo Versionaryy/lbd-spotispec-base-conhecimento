@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 
 class Recomendacao(BaseModel):
-    song: str
-    artist: str
-    spotify_url: str
+    titulo: str
+    artista: str
+    spotify_url: str 
 
 class Regra(BaseModel):
     genero: str

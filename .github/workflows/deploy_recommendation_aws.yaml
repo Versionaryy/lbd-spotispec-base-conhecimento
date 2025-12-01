@@ -60,6 +60,8 @@ jobs:
 
       - name: Comando CLI para executar Cloudformation
         run: |
+- name: Comando CLI para executar Cloudformation
+        run: |
           aws cloudformation deploy \
             --template-file ${{ env.CFN_TEMPLATE_FILE }} \
             --stack-name ${{ env.LAMBDA_NAME }} \
@@ -69,4 +71,6 @@ jobs:
               ImageTag=${{ env.IMAGE_TAG }} \
               LambdaName=${{ env.LAMBDA_NAME }} \
               ApiGatewayId=${{ env.API_GATEWAY_ID }} \
+              SpotifyClientId=${{ secrets.SPOTIFY_CLIENT_ID }} \
+              SpotifyClientSecret=${{ secrets.SPOTIFY_CLIENT_SECRET }} \
               --debug

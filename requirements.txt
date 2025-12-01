@@ -4,3 +4,6 @@ mangum
 pydantic
 spotipy
 logging
+boto3
+requests
+python-dotenv
