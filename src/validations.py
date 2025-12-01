@@ -60,7 +60,9 @@ def validar_musica(genero, energia, eh_curta, url):
         'Rock',
         'Sertanejo',
         'Metal',
-        'Hip-Hop'
+        'Hip-Hop',
+        'Eletrônica',
+        'MPB'
     ]
     LISTA_ENERGIAS = [
         'Alta',
