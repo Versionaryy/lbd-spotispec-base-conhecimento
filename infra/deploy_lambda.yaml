@@ -66,6 +66,10 @@ Resources:
         ImageUri: !Sub "${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${EcrRepositoryName}:${ImageTag}"
       MemorySize: 512
       Timeout: 30
+      Environment:
+        Variables:
+          SPOTIPY_CLIENT_ID: !Ref SpotipyClientId
+          SPOTIPY_CLIENT_SECRET: !Ref SpotipyClientSecret
 
   ## 3. Integração e Rotas
   
