@@ -39,6 +39,10 @@ Resources:
           - Effect: Allow
             Principal:
               Service: lambda.amazonaws.com
+      Environment:
+            Variables:
+              - SPOTIPY_CLIENT_ID: !Ref SpotifyClientId    
+              - SPOTIPY_CLIENT_SECRET: !Ref SpotifyClientSecret
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole

@@ -10,7 +10,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-aws_region = os.getenv("AWS_REGION")
+aws_region = os.environ.get("AWS_REGION")
 dynamodb = boto3.resource('dynamodb', region_name=aws_region)
 table = dynamodb.Table('SpotispecKnowledgeBase')
 

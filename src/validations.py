@@ -8,14 +8,14 @@ from boto3.dynamodb.conditions import Key
 
 
 load_dotenv()
-client_id = os.getenv("SPOTIPY_CLIENT_ID")
-client_secret = os.getenv("SPOTIPY_CLIENT_SECRET")
+client_id = os.environ.get("SPOTIPY_CLIENT_ID")
+client_secret = os.environ.get("SPOTIPY_CLIENT_SECRET")
 auth_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
 
 
-aws_region = os.getenv("AWS_REGION")
+aws_region = os.environ.get("AWS_REGION")
 dynamodb = boto3.resource('dynamodb', region_name=aws_region)
 table = dynamodb.Table('SpotispecKnowledgeBase')
 
