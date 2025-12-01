@@ -18,11 +18,11 @@ Parameters:
   ApiGatewayId: 
     Type: String
     Description: 'ID da API Gateway V2 (HTTP API)'
-  SpotifyClientId:
+  SpotipyClientId:
     Type: String
     Description: Credencial do Spotify
     NoEcho: true 
-  SpotifyClientSecret:
+  SpotipyClientSecret:
     Type: String
     Description: Segredo do Spotify
     NoEcho: true

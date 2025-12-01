@@ -69,6 +69,6 @@ jobs:
               ImageTag=${{ env.IMAGE_TAG }} \
               LambdaName=${{ env.LAMBDA_NAME }} \
               ApiGatewayId=${{ env.API_GATEWAY_ID }} \
-              SpotifyClientId=${{ secrets.SPOTIFY_CLIENT_ID }} \
-              SpotifyClientSecret=${{ secrets.SPOTIFY_CLIENT_SECRET }} \
+              SpotipyClientId=${{ secrets.SPOTIPY_CLIENT_ID }} \
+              SpotipyClientSecret=${{ secrets.SPOTIPY_CLIENT_SECRET }} \
               --debug
