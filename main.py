@@ -8,8 +8,19 @@ from mangum import Mangum
 from src.models import Regra
 from src.knowledge_base import adquirir_conhecimento
 from fastapi.responses import JSONResponse
+import logging
+
+
 
 app = FastAPI(title="Lambda de aquisição de conhecimento para sistema especialista")
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+@app.middleware("http")
+async def log_requests(request, call_next):
+    logger.info(f"Rota recebida pelo FastAPI: {request.method} {request.url.path}")
+    response = await call_next(request)
+    return response
 
 origins = [
     "http://localhost",
@@ -18,7 +29,7 @@ origins = [
     "https://det60lfqy4fiv.cloudfront.net"
 ]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["POST", "OPTIONS"], allow_headers=["*"])
-@app.post("/aquisicao-conhehcimento") # o prod é uma gabiarra, perdão professor 🙏
+@app.post("/aquisicao-conhecimento") # o prod é uma gabiarra, perdão professor 🙏
 def obter_recomendacao(regra: Regra):
     try:
         if not regra.musicas or len(regra.musicas) == 0:
