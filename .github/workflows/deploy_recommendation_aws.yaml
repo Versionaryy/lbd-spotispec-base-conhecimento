@@ -60,8 +60,6 @@ jobs:
 
       - name: Comando CLI para executar Cloudformation
         run: |
-- name: Comando CLI para executar Cloudformation
-        run: |
           aws cloudformation deploy \
             --template-file ${{ env.CFN_TEMPLATE_FILE }} \
             --stack-name ${{ env.LAMBDA_NAME }} \
