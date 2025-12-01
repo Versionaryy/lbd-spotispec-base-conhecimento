@@ -22,14 +22,14 @@ async def log_requests(request, call_next):
     response = await call_next(request)
     return response
 
-origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "https://det60lfqy4fiv.cloudfront.net",
-    "https://d1x3sdynnsov76.cloudfront.net/"
-]
-app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["POST", "OPTIONS"], allow_headers=["*"])
+# origins = [
+#     "http://localhost",
+#     "http://localhost:3000",
+#     "http://localhost:5173",
+#     "https://det60lfqy4fiv.cloudfront.net",
+#     "https://d1x3sdynnsov76.cloudfront.net"
+# ]
+# app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["POST", "OPTIONS"], allow_headers=["*"])
 @app.post("/prod/aquisicao-conhecimento") # o prod é uma gabiarra, perdão professor 🙏
 def obter_recomendacao(regra: Regra):
     try:

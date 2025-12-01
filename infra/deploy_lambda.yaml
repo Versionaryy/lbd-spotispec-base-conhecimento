@@ -96,12 +96,12 @@ Resources:
       Principal: apigateway.amazonaws.com
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiGatewayId}/*/*"
 
-  OptionsKnowledgeBaseRoute:
-    Type: AWS::ApiGatewayV2::Route
-    Properties:
-      ApiId: !Ref ApiGatewayId
-      RouteKey: "OPTIONS /aquisicao-conhecimento"
-      Target: !Sub "integrations/${LambdaIntegration}"
+  # OptionsKnowledgeBaseRoute:
+  #   Type: AWS::ApiGatewayV2::Route
+  #   Properties:
+  #     ApiId: !Ref ApiGatewayId
+  #     RouteKey: "OPTIONS /aquisicao-conhecimento"
+  #     Target: !Sub "integrations/${LambdaIntegration}"
       
 Outputs:
   LambdaFunctionName:
