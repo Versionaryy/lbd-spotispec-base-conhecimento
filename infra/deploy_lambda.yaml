@@ -85,7 +85,7 @@ Resources:
     Type: AWS::ApiGatewayV2::Route
     Properties:
       ApiId: !Ref ApiGatewayId
-      RouteKey: "POST /base-conhecimento" 
+      RouteKey: "POST /aquisicao-conhecimento" 
       Target: !Sub "integrations/${LambdaIntegration}"
       
   LambdaInvokePermission:
@@ -100,7 +100,7 @@ Resources:
     Type: AWS::ApiGatewayV2::Route
     Properties:
       ApiId: !Ref ApiGatewayId
-      RouteKey: "OPTIONS /base-conhecimento"
+      RouteKey: "OPTIONS /aquisicao-conhecimento"
       Target: !Sub "integrations/${LambdaIntegration}"
       
 Outputs:
