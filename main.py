@@ -26,7 +26,8 @@ origins = [
     "http://localhost",
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://det60lfqy4fiv.cloudfront.net"
+    "https://det60lfqy4fiv.cloudfront.net",
+    "https://d1x3sdynnsov76.cloudfront.net/"
 ]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["POST", "OPTIONS"], allow_headers=["*"])
 @app.post("/prod/aquisicao-conhecimento") # o prod é uma gabiarra, perdão professor 🙏
