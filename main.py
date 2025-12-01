@@ -29,7 +29,7 @@ origins = [
     "https://det60lfqy4fiv.cloudfront.net"
 ]
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["POST", "OPTIONS"], allow_headers=["*"])
-@app.post("/aquisicao-conhecimento") # o prod é uma gabiarra, perdão professor 🙏
+@app.post("/prod/aquisicao-conhecimento") # o prod é uma gabiarra, perdão professor 🙏
 def obter_recomendacao(regra: Regra):
     try:
         if not regra.musicas or len(regra.musicas) == 0:
